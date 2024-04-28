@@ -1,7 +1,7 @@
-**This is a task fo Clear Solutions.**
+**This is a task for Clear Solutions.**
 
-Plaese note, that there is no database in this appliction, as the task didn't require one, so all data stored in ArrayList in UserController.
-In addition to the required functions, there is implemented getAll() fuction in UserController for convenient testing other functions.
+Please note, that there is no database in this application, as the task didn't require one, so all data is stored in ArrayList in UserController.
+In addition to the required functions, there is an implemented getAll() fuction in UserController for convenient testing of other functions.
 
 There are three classes of tests, each having its purpose:
 
