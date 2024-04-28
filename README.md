@@ -6,6 +6,8 @@ In addition to the required functions, there is implemented getAll() fuction in 
 There are three classes of tests, each having its purpose:
 
 -UserTests - testing User validation and update function
+
 -UserControllerTests - testing all controller functions
+
 -GlobalExceptionHandlerTests - testing exception handling
 
