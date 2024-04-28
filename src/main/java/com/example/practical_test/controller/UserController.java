@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -45,13 +44,15 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.OK).body("User updated successfully");
             }
             throw new RuntimeException("User with id = " + userId + " not found");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<String> updateAllFields(@PathVariable int userId, @RequestBody User user) {
+    public ResponseEntity<String> updateAllFields(@PathVariable int userId, @Valid @RequestBody User user) {
         try {
             if (userId >= 0 && userId < users.size()) {
                 users.set(userId, user);

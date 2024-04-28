@@ -1,10 +1,15 @@
 package com.example.practical_test.model;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class User {
 
@@ -25,8 +30,6 @@ public class User {
     @Pattern(regexp="(^$|[0-9]{10})", message = "Invalid phone number")
     private String phoneNumber;
 
-    // Constructors, getters, setters, and other methods
-
     public User() {
     }
 
@@ -40,16 +43,30 @@ public class User {
     }
 
     public void update(User user) {
-        if (user.getEmail() != null) this.email = user.getEmail();
-        if (user.getFirstName() != null) this.firstName = user.getFirstName();
-        if (user.getLastName() != null) this.lastName = user.getLastName();
-        if (user.getBirthDate() != null) this.birthDate = user.getBirthDate();
-        if (user.getAddress() != null) this.address = user.getAddress();
-        if (user.getPhoneNumber() != null) this.phoneNumber = user.getPhoneNumber();
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        if (user.getEmail() == null) user.setEmail(this.email);
+        if (user.getFirstName() == null) user.setFirstName(this.firstName);
+        if (user.getLastName() == null) user.setLastName(this.lastName);
+        if (user.getBirthDate() == null) user.setBirthDate(this.birthDate);
+        if (user.getAddress() == null) user.setAddress(this.address);
+        if (user.getPhoneNumber() == null) user.setPhoneNumber(this.phoneNumber);
+
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        if (!violations.isEmpty()) {
+            throw new IllegalArgumentException("Validation failed: " + violations.toString());
+        }
+
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.birthDate = user.getBirthDate();
+        this.address = user.getAddress();
+        this.phoneNumber = user.getPhoneNumber();
     }
 
     // Getters and setters
-
     public String getEmail() {
         return email;
     }
