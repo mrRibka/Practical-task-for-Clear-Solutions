@@ -2,7 +2,6 @@ package com.example.practical_test;
 
 import com.example.practical_test.controller.UserController;
 import com.example.practical_test.model.User;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class UserControllerTests {
     @Test
     public void updateUser_ExistingUser_ReturnsOk() {
         userController.createUser(new User("test1@example.com", "John", "Doe", LocalDate.of(1995, 5, 5), null, null));
-        ResponseEntity<String> response = userController.updateUser(0, new User());
+        ResponseEntity<String> response = userController.updateUser(0, new User("test2@example.com", "Jack", "Doe", LocalDate.of(1995, 5, 5), null, null));
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -58,7 +57,7 @@ public class UserControllerTests {
     @Test
     public void updateAllFields_ExistingUser_ReturnsOk() {
         userController.createUser(new User("test1@example.com", "John", "Doe", LocalDate.of(1995, 5, 5), null, null));
-        ResponseEntity<String> response = userController.updateAllFields(0, new User());
+        ResponseEntity<String> response = userController.updateAllFields(0, new User("test2@example.com", "Jack", "Doe", LocalDate.of(1995, 5, 5), null , null));
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
